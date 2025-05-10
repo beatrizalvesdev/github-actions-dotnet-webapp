@@ -1,0 +1,38 @@
+name: Build .NET Project
+
+on:
+  # Evento de push no repositório (em qualquer branch, por exemplo 'main')
+  push:
+    branches:
+      - main  # ou a branch que você deseja observar
+  
+  # Evento agendado para ser executado a cada hora
+  schedule:
+    - cron: '0 * * * *'  # Executa a cada hora
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Especifica que o job será executado em um runner Ubuntu
+
+    steps:
+      # Passo 1: Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Passo 2: Configurar o SDK do .NET
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'  # ou a versão que você está usando (ex: 7.0)
+
+      # Passo 3: Restaurar dependências do projeto
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Passo 4: Compilar o projeto
+      - name: Build the project
+        run: dotnet build --configuration Release
+
+      # Passo 5: Rodar os testes (se existirem)
+      - name: Run tests
+        run: dotnet test
