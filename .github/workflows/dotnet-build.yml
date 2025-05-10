@@ -28,13 +28,17 @@ jobs:
       # Passo 3: Restaurar dependências do projeto
       - name: Restore dependencies
         run: |
-         cd github4women
-         dotnet restore
+          cd github4women
+          dotnet restore
 
       # Passo 4: Compilar o projeto
       - name: Build the project
-        run: dotnet build --configuration Release
+        run: |
+          cd github4women
+          dotnet build --configuration Release
 
       # Passo 5: Rodar os testes (se existirem)
       - name: Run tests
-        run: dotnet test
+        run: |
+          cd github4women
+          dotnet test
